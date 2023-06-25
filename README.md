@@ -26,33 +26,35 @@ python main.py
 
 Upon running the application, you will be presented with a GUI that looks like this:
 
-<div style="text-align:center">
-  ![GUI](./assets/1.png)
-</div>
+<p align="center">
+    <img src="./assets/1.png" alt="GUI" width="500"/>
+</p>
 
 The TLE file and the file containing location (& elevation) data of Ground Stations can be selected from the GUI. The start and end times of the simulation can also be selected from the GUI.
 
-<div style="text-align:center">
-    ![File Selection](./assets/2.png)
-</div>
+<p align="center">
+    <img src="./assets/2.png" alt="GUI" width="500"/>
+</p>
 
 After selecting both files, the start and end times, click on the `Compute` button to start the simulation.
 
-<div style="text-align:center">
-    ![Simulation](./assets/3.png)
-</div>
+<p align="center">
+    <img src="./assets/3.png" alt="GUI" width="500"/>
+</p>
 
 Once the simulation is complete, click on the `Plot` button to visualize the simulation. Here are some sample outputs.
 
-<div style="text-align:center">
-    ![Plot](./assets/4.png)
-    ![Hover](./assets/5.png)
-</div>
+<p align="center">
+    <img src="./assets/4.png" alt="GUI" width="500"/>
+</p>
+<p align="center">
+    <img src="./assets/5.png" alt="GUI" width="500"/>
+</p>
 
 The above simulations were computed on the following TLE file: [planet_mc_20.tle](./sample-data/planet_mc_20.tle) and the following Ground Station file: [test_gst.csv](./sample-data/test_gst.csv).
 
 The following simulation was conducted on the entire constellation of Planet Labs satellites. The TLE file can be found here: [planet_mc_20.tle](./sample-data/planet_mc_20.tle) and the same Ground Station file as above.
 
-<div style="text-align:center">
-    ![Plot](./assets/6.png)
-</div>
+<p align="center">
+    <img src="./assets/6.png" alt="GUI" width="500"/>
+</p>
