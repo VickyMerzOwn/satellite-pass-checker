@@ -1,0 +1,7 @@
+pyqt5
+pyqt5-tools
+PyQtWebEngine
+folium
+pandas
+plotly
+ephem
