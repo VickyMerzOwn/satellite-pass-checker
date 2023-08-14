@@ -1,3 +1,4 @@
+import os
 import sys
 import io
 import folium
@@ -9,6 +10,7 @@ from PyQt5 import QtCore
 from PyQt5.QtWidgets import QApplication, QHBoxLayout, QVBoxLayout, QWidget, QLabel, QLineEdit, QPushButton, QFileDialog, QProgressDialog, QDialog, QVBoxLayout, QDateTimeEdit
 from PyQt5.QtWebEngineWidgets import QWebEngineView
 from datetime import datetime, timedelta
+import time
 
 
 class MyApp(QWidget):
@@ -46,14 +48,14 @@ class MyApp(QWidget):
         start_label = QLabel("Start Datetime:")
         self.start_datetime_edit = QDateTimeEdit()
         self.start_datetime_edit.setDisplayFormat("yyyy-MM-dd HH:mm:ss")
-        self.start_datetime_edit.setDateTime(datetime(2023, 6, 17, 12, 0, 0))
+        self.start_datetime_edit.setDateTime(datetime(2023, 8, 14, 12, 0, 0))
         datetime_layout.addWidget(start_label)
         datetime_layout.addWidget(self.start_datetime_edit)
 
         end_label = QLabel("End Datetime:")
         self.end_datetime_edit = QDateTimeEdit()
         self.end_datetime_edit.setDisplayFormat("yyyy-MM-dd HH:mm:ss")
-        self.end_datetime_edit.setDateTime(datetime(2023, 6, 18, 11, 59, 59))
+        self.end_datetime_edit.setDateTime(datetime(2023, 8, 15, 11, 59, 59))
         datetime_layout.addWidget(end_label)
         datetime_layout.addWidget(self.end_datetime_edit)
 
@@ -89,6 +91,7 @@ class MyApp(QWidget):
 
     def read_tle(self):
         file_name, _ = QFileDialog.getOpenFileName(self, "Select TLE File")
+        self.tlefile = os.path.basename(file_name)
         self.file_input_1.setText(file_name)
         with open(file_name, "r") as tle_file:
             self.tle_lines = tle_file.readlines()
@@ -104,6 +107,7 @@ class MyApp(QWidget):
 
     def read_gst(self):
         file_name, _ = QFileDialog.getOpenFileName(self, "Select GST File")
+        self.gstfile = os.path.basename(file_name)
         self.file_input_2.setText(file_name)
         self.plot_coordinates(file_name)
         self.enable_compute_button()
@@ -145,17 +149,16 @@ class MyApp(QWidget):
         start_datetime = datetime.strptime(start_datetime, date_format)
         end_datetime = datetime.strptime(end_datetime, date_format)
 
+        seconds = (end_datetime - start_datetime).total_seconds()
+
         entries = []
         # print(len(self.gst_coordinates), len(self.tles))
         for _ in range(len(self.gst_coordinates)):
             entry = {"Start Time": 0, "End Time": 0}
             entries.append(entry)
 
-        # Create the dataframe from the list of entries
-        df = pd.DataFrame(entries)
-
         # Perform your computation here using start_datetime and end_datetime
-        total = 86400 * len(self.gst_coordinates)
+        total = seconds * len(self.gst_coordinates)
         current = 0
         gantt_list = []
 
@@ -199,10 +202,12 @@ class MyApp(QWidget):
                 
         print(len(gantt_list))
         self.gantt_df = pd.DataFrame(gantt_list)
+        self.gantt_df.to_csv('sample-data/gantt_data.csv', index=False)
         self.gantt_button.setEnabled(True)
         self.progress_dialog.setLabelText("Computation Complete")
 
     def start_satellite_computation(self):
+        starting = time.time()
         self.progress_dialog = QProgressDialog("Computing...", "Close", 0, 100)
         self.progress_dialog.setWindowTitle("Progress")
         self.progress_dialog.setWindowModality(QtCore.Qt.WindowModal)
@@ -217,17 +222,16 @@ class MyApp(QWidget):
         start_datetime = datetime.strptime(start_datetime, date_format)
         end_datetime = datetime.strptime(end_datetime, date_format)
 
+        seconds = (end_datetime - start_datetime).total_seconds()
+
         entries = []
         # print(len(self.gst_coordinates), len(self.tles))
         for _ in range(len(self.gst_coordinates)):
             entry = {"Start Time": 0, "End Time": 0}
             entries.append(entry)
 
-        # Create the dataframe from the list of entries
-        df = pd.DataFrame(entries)
-
         # Perform your computation here using start_datetime and end_datetime
-        total = 86400 * len(self.tles)
+        total = seconds * len(self.tles)
         current = 0
         gantt_list = []
 
@@ -268,15 +272,25 @@ class MyApp(QWidget):
                             last_active = None
                 current_datetime += timedelta(seconds=1)
                 
-        print(len(gantt_list))
+        # print(len(gantt_list))
         self.gantt_df = pd.DataFrame(gantt_list)
+        # print(self.tlefile, self.gstfile)
+        newfilename = 'results/data/' + self.tlefile.split('.')[0] + '_' + self.gstfile.split('.')[0] + '.csv'
+        self.gantt_df.to_csv(newfilename, index=False)
         self.gantt_button.setEnabled(True)
         self.progress_dialog.setLabelText("Computation Complete")
+        ending = time.time()
+        print(ending - starting)
+        self.plot_gantt()
 
     def plot_gantt(self):
         print(self.gantt_df.columns)
         fig = px.timeline(self.gantt_df, x_start="Start", x_end="Finish", y="Resource", color="Resource")
         fig.update_xaxes(tickformat="%Y-%m-%d %H:%M:%S")
+        output_folder = "results/plots"
+        file_name = self.tlefile.split('.')[0] + '_' + self.gstfile.split('.')[0]
+        plot_filename = os.path.join(output_folder, file_name + ".html")
+        fig.write_html(plot_filename)
 
         # Save plot as HTML file in a temporary directory
         with tempfile.TemporaryDirectory() as temp_dir:
