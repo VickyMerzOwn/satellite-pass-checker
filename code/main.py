@@ -242,6 +242,8 @@ class MyApp(QWidget):
                 self.tles[i][0], self.tles[i][1], self.tles[i][2]
             )
             last_active = None
+            gst = None
+
             
             while current_datetime < end_datetime:
                 current += 1
@@ -262,13 +264,15 @@ class MyApp(QWidget):
                     if los_distance_km < 1000:
                         if last_active is None:
                             last_active = current_datetime
+                            gst = j
                         break
                     else:
                         if last_active is not None and (j == len(self.gst_coordinates) - 1):
                             # active_ranges.append((last_active, current_datetime))
                             gantt_list.append(
-                                dict(Task=str(self.gst_coordinates[j][3]), Start=last_active, Finish=current_datetime, Resource=self.tles[i][0])
+                                dict(Task=str(self.gst_coordinates[gst][3]), Start=last_active, Finish=current_datetime, Resource=self.tles[i][0])
                             )
+                            gst = None
                             last_active = None
                 current_datetime += timedelta(seconds=1)
                 

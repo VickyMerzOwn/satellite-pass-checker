@@ -1,6 +1,14 @@
+# README
+<!-- Create bullet points -->
+
+
+* The following table contains condensed results of the satellite pass checker.
+* In each cell there are 2 pairs (mean, median) of values. The first pair refers to the contact durations for the constellation-GST pair, while the second pair refers to the idle (not-in-contact) duration.
+* Clicking on either pair leads to the corresponding plot for that pair.
+
 |          | Azure | Leaf | KSAT | AWS | Planet |
 |----------|-------|------|------|-----|--------|
-| Planet   |   X   |   X   |   X   |  X   |    X    |
-| Swarm    |   X   |   X   |   X   |  X   |    X    |
+| Planet   |   [(256.56948476052247, 237.0)](cdfs/planet_mc_azure.png), [(2926.9883217178376, 2816.0)](cdfs/gaps_planet_mc_azure.png)   |   [(220.68923476005187, 213.0)](cdfs/planet_mc_leaf.png), [(4363.686199342826, 2856.0)](cdfs/gaps_planet_mc_leaf.png)   |   [(209.03243948980617, 215.0)](cdfs/planet_mc_ksat.png), [(1532.8236620873488, 1201.0)](cdfs/gaps_planet_mc_ksat.png)   |  [(183.91811350090697, 202.0)](cdfs/planet_mc_aws.png), [(4215.040481400438, 3253.5)](cdfs/gaps_planet_mc_aws.png)   |    [(206.29331196269854, 214.0)](cdfs/planet_mc_planet.png), [(2335.415915915916, 1707.0)](cdfs/gaps_planet_mc_planet.png)    |
+| Swarm    |   [(258.3792859667727, 239.0)](cdfs/swarm_azure.png), [(2843.6977256052824, 2649.5)](cdfs/gaps_swarm_azure.png)   |   [(227.34172118772017, 216.0)](cdfs/swarm_leaf.png), [(4120.660828025478, 2732.0)](cdfs/gaps_swarm_leaf.png)   |   [(212.08695652173913, 217.0)](cdfs/swarm_ksat.png), [(1458.8807126258714, 1141.5)](cdfs/gaps_swarm_ksat.png)   |  [(185.87252412392078, 205.0)](cdfs/swarm_aws.png), [(4192.1136120042875, 3156.5)](cdfs/gaps_swarm_aws.png)   |    [(210.18746518105849, 218.5)](cdfs/swarm_planet.png), [(2231.208775451678, 1657.0)](cdfs/gaps_swarm_planet.png)    |
 | Starlink |       |       |       |      |         |
-| Oneweb   |   X   |   X   |   X   |  X   |    X    |
+| Oneweb   |   [(202.10783055198974, 193.0)](cdfs/oneweb_azure.png), [(3536.5842847548693, 3451.0)](cdfs/gaps_oneweb_azure.png)   |   [(166.06673021925644, 169.0)](cdfs/oneweb_leaf.png), [(5138.098979591837, 2998.5)](cdfs/gaps_oneweb_leaf.png)   |   [(168.37614314115308, 169.0)](cdfs/oneweb_ksat.png), [(2146.549468520033, 1488.0)](cdfs/gaps_oneweb_ksat.png)   |  [(153.99454148471617, 161.5)](cdfs/oneweb_aws.png), [(5959.507674144038, 4502.0)](cdfs/gaps_oneweb_aws.png)   |    [(164.1169900058789, 162.0)](cdfs/oneweb_planet.png), [(3174.899509803922, 2453.0)](cdfs/gaps_oneweb_planet.png)    |
