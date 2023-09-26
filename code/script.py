@@ -57,7 +57,8 @@ def plot_cdf(sorted_measurements, cdf):
 
 
 if __name__ == '__main__':
-    for filename in os.listdir('results/data'):
+    for filename in ["starlink_aws.csv", "starlink_azure.csv", "starlink_ksat.csv", "starlink_leaf.csv", "starlink_planet.csv"]:
+    # for filename in os.listdir('results/data'):
     # for filename in ["planet_mc_planet.csv", "planet_mc_all_gst.csv"]:
         if filename.endswith('.csv'):
             string = filename
